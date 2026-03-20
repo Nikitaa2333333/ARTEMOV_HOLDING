@@ -900,27 +900,89 @@ h1.hero__title {
 }
 .advantage-highlight strong { color: #93C5FD; }
 
-.investors__conclusion {
-  background: var(--clr-white);
-  border: 1px solid var(--clr-border);
+/* Финальная карта инвестора */
+.investors-final-card {
+  background: var(--clr-bg-dark);
+  color: var(--clr-white);
   border-radius: var(--radius-lg);
-  padding: 40px 40px;
-  margin-top: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  box-shadow: var(--shadow-sm);
+  padding: 64px 48px;
+  margin-top: 80px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 32px 64px -16px rgba(0,0,0,0.5);
 }
-.investors__conclusion h3 {
+.investors-final-card > * {
+  max-width: 70%;
+}
+@media (max-width: 992px) {
+  .investors-final-card > * {
+    max-width: 100%;
+  }
+}
+.investors-final-card::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(27,79,216,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.final-card__title {
+  font-family: var(--ff-head);
+  font-size: clamp(1.375rem, 3.5vw, 1.875rem);
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  margin-bottom: 24px;
+  color: var(--clr-white);
+}
+.final-card__text {
+  font-size: 1.125rem;
+  color: var(--clr-white);
+  line-height: 1.7;
+  max-width: 820px;
+  margin-bottom: 48px;
+  opacity: 0.9;
+}
+.final-card__highlight {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid var(--clr-accent);
+  padding: 32px 40px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-bottom: 48px;
+}
+.final-card__highlight h4 {
   font-family: var(--ff-head);
   font-size: 1.25rem;
   font-weight: var(--fw-bold);
-  color: var(--clr-text);
+  color: var(--clr-white);
+  margin-bottom: 12px;
 }
-.investors__conclusion p {
-  font-size: .9375rem;
-  color: var(--clr-text-mid);
+.final-card__highlight p {
+  color: var(--clr-white);
+  font-size: 1.375rem;
+  font-weight: var(--fw-semi);
+}
+.final-card__cta {
+  font-size: 1.125rem;
+  color: var(--clr-white);
   line-height: 1.7;
+  margin-bottom: 40px;
+}
+.final-card__actions {
+  margin-top: 48px;
+}
+.btn--large {
+  padding: 20px 48px;
+  font-size: 1.125rem;
+  width: auto;
+  border-radius: var(--radius-sm);
+}
+.final-card__note {
+  margin-top: 24px;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .cta-banner {
@@ -963,7 +1025,8 @@ h1.hero__title {
    ============================================= */
 .contacts-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+  max-width: 800px;
   gap: 64px;
 }
 
