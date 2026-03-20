@@ -113,10 +113,23 @@ img { max-width: 100%; display: block; }
 }
 
 .nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+.logo-img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+.logo-text {
+  font-family: var(--ff-head);
   font-size: 1.125rem;
   font-weight: var(--fw-black);
   color: var(--clr-text);
-  flex-shrink: 0;
+  letter-spacing: -0.02em;
 }
 
 .nav__links {
@@ -421,11 +434,6 @@ h1.hero__title {
   font-weight: var(--fw-semi) !important;
   color: var(--clr-text) !important;
 }
-.prod-table__frac {
-  font-weight: var(--fw-semi) !important;
-  color: var(--clr-accent) !important;
-  white-space: nowrap;
-}
 .prod-table__growth {
   font-weight: var(--fw-semi) !important;
   white-space: nowrap;
@@ -603,6 +611,65 @@ h1.hero__title {
   margin-bottom: 10px;
 }
 .partner-card p {
+  font-size: .9375rem;
+  color: var(--clr-text-mid);
+  line-height: 1.6;
+}
+
+/* Ключевые партнеры */
+.partners-minimal {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.partner-item {
+  background: var(--clr-white);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  padding: 40px 32px;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+.partner-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--clr-accent);
+}
+.partner-item__logo {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.partner-item__logo img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+.logo-placeholder {
+  font-family: var(--ff-head);
+  font-size: .75rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 8px 12px;
+  background: var(--clr-bg-gray);
+  border-radius: 4px;
+}
+.partner-item__name {
+  font-family: var(--ff-head);
+  font-size: 1.25rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text);
+  margin-bottom: 11px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.icon-sm { width: 14px; height: 14px; opacity: 0.4; }
+.partner-item__desc {
   font-size: .9375rem;
   color: var(--clr-text-mid);
   line-height: 1.6;
@@ -975,9 +1042,11 @@ h1.hero__title {
   flex-wrap: wrap;
 }
 .footer__logo {
-  font-size: 1rem;
-  font-weight: var(--fw-black);
-  color: var(--clr-white);
+  display: flex;
+  align-items: center;
+}
+.footer__logo .logo-img {
+  height: 52px;
 }
 .footer__links {
   display: flex;
@@ -991,6 +1060,103 @@ h1.hero__title {
 }
 .footer__links a:hover { color: var(--clr-white); }
 .footer__copy { font-size: .8125rem; color: #525252; }
+
+/* --- Form Feedback & Loading --- */
+.btn--loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+.btn--loading::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin-top: -10px;
+  margin-left: -10px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn--success {
+  background: var(--clr-green) !important;
+  border-color: var(--clr-green) !important;
+  color: var(--clr-white) !important;
+}
+
+.form-message {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.form-message--success {
+  display: block;
+  background: rgba(22, 163, 74, 0.1);
+  color: #16A34A;
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+.form-message--error {
+  display: block;
+  background: rgba(220, 38, 38, 0.1);
+  color: #DC2626;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Юридическая информация */
+.legal-info {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.legal-info__emblem {
+  margin-bottom: 20px;
+}
+.legal-info__emblem img {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+}
+.legal-info__parent {
+  font-family: var(--ff-head);
+  font-size: .875rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-white);
+  line-height: 1.4;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.legal-info__details {
+  font-size: .8125rem;
+  color: #a3a3a3;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.legal-info__link {
+  font-size: .875rem;
+  color: var(--clr-accent);
+  text-decoration: none;
+  font-weight: var(--fw-bold);
+  transition: opacity var(--transition);
+}
+.legal-info__link:hover {
+  opacity: 0.8;
+}
 
 /* =============================================
    АНИМАЦИИ
@@ -1052,6 +1218,7 @@ h1.hero__title {
   .facts-table__key { border-right: none; border-bottom: 1px solid var(--clr-border); }
 
   .partners-grid { grid-template-columns: 1fr; }
+  .partners-minimal { grid-template-columns: 1fr; }
   .advantages-grid { grid-template-columns: 1fr 1fr; }
 
   .cta-banner { flex-direction: column; padding: 36px 28px; align-items: flex-start; }

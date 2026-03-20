@@ -99,23 +99,66 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-// === Форма обратной связи (заглушка) ===
+// === Форма обратной связи (Автоматизация через Email) ===
 const form = document.getElementById('contactForm');
 if (form) {
-  form.addEventListener('submit', e => {
+  const formStatus = document.createElement('div');
+  formStatus.className = 'form-message';
+  form.appendChild(formStatus);
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
-    btn.textContent = '✓ Заявка отправлена';
-    btn.style.background = '#16A34A';
-    btn.style.borderColor = '#16A34A';
+    const originalBtnText = btn.textContent;
+    
+    // Сбрасываем статус
+    formStatus.className = 'form-message';
+    formStatus.textContent = '';
+    
+    // Собираем данные
+    const formData = new FormData(form);
+    
+    // Эффект загрузки
+    btn.classList.add('btn--loading');
     btn.disabled = true;
-    setTimeout(() => {
-      btn.textContent = 'Отправить';
-      btn.style.background = '';
-      btn.style.borderColor = '';
+
+    try {
+      // ВНИМАНИЕ: Замените 'YOUR_FORM_ID' на ваш ID из Formspree.io
+      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        btn.classList.remove('btn--loading');
+        btn.classList.add('btn--success');
+        btn.textContent = '✓ Отправлено';
+        formStatus.classList.add('form-message--success');
+        formStatus.textContent = 'Спасибо! Ваше сообщение отправлено. Мы свяжемся с вами в ближайшее время.';
+        form.reset();
+      } else {
+        const data = await response.json();
+        throw new Error(data.error || 'Ошибка при отправке');
+      }
+    } catch (error) {
+      btn.classList.remove('btn--loading');
       btn.disabled = false;
-      form.reset();
-    }, 4000);
+      formStatus.classList.add('form-message--error');
+      formStatus.textContent = 'Упс! Что-то пошло не так. Пожалуйста, проверьте введённые данные или попробуйте позже.';
+    } finally {
+      setTimeout(() => {
+        btn.classList.remove('btn--success');
+        btn.textContent = originalBtnText;
+        btn.disabled = false;
+        // Скрываем сообщение через 7 секунд
+        setTimeout(() => {
+          formStatus.className = 'form-message';
+        }, 2000);
+      }, 5000);
+    }
   });
 }
 
